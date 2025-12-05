@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-export default function RecordingsList({ initialQuery = 'cnt:Guatemala', initialPage = 1 }) {
+export default function RecordingsList({ initialQuery = 'cnt:Guatemala', initialPage = 1, onBack }) {
   const [query, setQuery] = useState(initialQuery);
   const [page, setPage] = useState(initialPage);
   const [loading, setLoading] = useState(false);
@@ -47,6 +47,29 @@ export default function RecordingsList({ initialQuery = 'cnt:Guatemala', initial
 
   return (
     <div style={{ padding: 16, fontFamily: 'Arial, sans-serif' }}>
+      {onBack && (
+        <div style={{ marginBottom: 12 }}>
+          <button
+            onClick={onBack}
+            aria-label="Volver al inicio"
+            style={{
+              padding: '8px 12px',
+              borderRadius: 8,
+              border: 'none',
+              background: 'var(--accent)',
+              color: 'white',
+              cursor: 'pointer',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: 8,
+              fontWeight: 600
+            }}
+          >
+            ← Volver
+          </button>
+        </div>
+      )}
+
       <h2>Grabaciones (Xeno-Canto via proxy)</h2>
 
       <form onSubmit={handleSearch} style={{ marginBottom: 12 }}>
