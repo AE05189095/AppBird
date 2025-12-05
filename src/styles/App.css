@@ -1,0 +1,64 @@
+* { box-sizing: border-box; }
+:root{
+  --bg: #f6f8fb;
+  --card: #ffffff;
+  --accent: #0b74c5;
+  --muted: #6b7280;
+  --text: #0f1724;
+}
+
+html,body,#root { height:100%; }
+body {
+  font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, Arial;
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing:antialiased;
+}
+
+.app-header{
+  background: linear-gradient(90deg,var(--accent),#0a6bb0);
+  color: white;
+  padding: 16px 14px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(11,116,197,0.12);
+}
+.app-title{ font-weight:700; font-size:18px; }
+.app-sub{ font-size:12px; opacity:0.95; }
+
+.app-main{ padding:14px; max-width:720px; margin:0 auto; }
+.app-footer{ text-align:center; font-size:12px; color:var(--muted); padding:8px 0 40px; }
+
+/* Ensure root fills viewport so footer/pager alignment works */
+.app-root { min-height: 100vh; display:flex; flex-direction:column; }
+.app-main { flex:1 1 auto; display:flex; flex-direction:column; }
+
+/* Ensure list fills available vertical space so pager stays at bottom */
+.list { display:flex; flex-direction:column; min-height: 100%; }
+.cards { flex:1 1 auto; overflow:auto; padding-right:4px; }
+.pager { margin-top:auto; }
+
+
+
+.search{ display:flex; gap:8px; margin-bottom:12px; }
+.search input{ flex:1; padding:10px 12px; border-radius:10px; border:1px solid #e6e9ee; background:#fff; color:var(--text); }
+.search input::placeholder { color:#98a0ad; }
+.search button{ padding:10px 12px; border-radius:10px; border:none; background:var(--accent); color:white; cursor:pointer; }
+
+.muted{ color:var(--muted); }
+.error{ color:#b00020; }
+
+.cards{ display:grid; grid-template-columns:1fr; gap:12px; }
+.card{ background:var(--card); border-radius:12px; padding:12px; box-shadow:0 6px 18px rgba(12,20,28,0.06); }
+.card-title{ margin:0 0 6px 0; font-size:16px; }
+.card-audio{ width:100%; margin-top:8px; }
+.card-link{ display:inline-block; margin-top:10px; color:var(--accent); font-weight:600; }
+.no-audio{ color:var(--muted); font-size:13px; }
+
+.pager{ display:flex; gap:10px; align-items:center; justify-content:center; margin-top:16px; }
+.pager button{ padding:8px 12px; min-width:44px; border-radius:8px; border:none; background:var(--accent); color:white; box-shadow:0 4px 12px rgba(11,116,197,0.12); cursor:pointer; display:inline-flex; align-items:center; justify-content:center; font-size:16px; }
+.pager button[disabled]{ opacity:0.45; cursor:default; }
+.pager-info{ font-size:14px; }
+
+@media(min-width:700px){ .cards{ grid-template-columns:repeat(2,1fr); } }
+
