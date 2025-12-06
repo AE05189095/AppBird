@@ -19,7 +19,7 @@ body {
 .app-header{
   background: linear-gradient(90deg,var(--accent),#0a6bb0);
   color: white;
-  padding: 16px 14px;
+  padding: 16px 150px;
   text-align: center;
   box-shadow: 0 2px 8px rgba(11,116,197,0.12);
 }
