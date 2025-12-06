@@ -24,9 +24,7 @@ export default function RecordingsList({ onBack }) {
 
       const result = await resp.json();
       if (!result || !result.data) throw new Error('Respuesta inesperada del backend');
-
       setRecordingsData(result.data);
-
     } catch (err) {
       setError(err.message || String(err));
     } finally {
@@ -53,21 +51,19 @@ export default function RecordingsList({ onBack }) {
     if (event) event.preventDefault();
   };
 
-  // Estilos globales para asegurar fondo blanco en toda la pantalla
-  useEffect(() => {
-    document.body.style.backgroundColor = '#fff';
-    document.documentElement.style.backgroundColor = '#fff';
-    document.body.style.color = '#000';
-  }, []);
-
   return (
-    <div style={{ 
-      padding: 16, 
-      fontFamily: 'Arial, sans-serif',
-      backgroundColor: '#fff', // fondo blanco
-      minHeight: '100vh',
-      color: '#000'
-    }}>
+    <div
+      style={{
+        padding: 16,
+        paddingTop: 24,
+        fontFamily: 'Arial, sans-serif',
+        backgroundColor: 'transparent',
+        minHeight: '100%',
+        color: '#000',
+        width: '100vw',
+        overflowX: 'hidden'
+      }}
+    >
       {onBack && (
         <div style={{ marginBottom: 12 }}>
           <button
@@ -88,7 +84,6 @@ export default function RecordingsList({ onBack }) {
         </div>
       )}
 
-      {/* Formulario con input + X + botón Buscar a la derecha */}
       <form
         onSubmit={handleSearch}
         style={{
@@ -110,7 +105,7 @@ export default function RecordingsList({ onBack }) {
               boxSizing: 'border-box',
               borderRadius: 8,
               border: '1px solid #ccc',
-              backgroundColor: '#fff', // fondo blanco
+              backgroundColor: '#fff',
               color: '#000'
             }}
           />
@@ -127,7 +122,6 @@ export default function RecordingsList({ onBack }) {
                 background: 'transparent',
                 cursor: 'pointer',
                 fontSize: 16,
-                lineHeight: 1,
                 color: '#888',
                 padding: 0
               }}
@@ -167,7 +161,9 @@ export default function RecordingsList({ onBack }) {
         {filteredRecordings.map(r => (
           <li key={r.id} style={{ marginBottom: 16, borderBottom: '1px solid #eee', paddingBottom: 8 }}>
             <div style={{ fontWeight: 'bold' }}>{r.en || r.species || 'Sin título'}</div>
-            <div style={{ fontSize: 13, color: '#555' }}>{r.gen || ''} {r.sp || ''} — {r.cnt || ''} — {r.length || ''}</div>
+            <div style={{ fontSize: 13, color: '#555' }}>
+              {r.gen || ''} {r.sp || ''} — {r.cnt || ''} — {r.length || ''}
+            </div>
 
             {(r.file || r.url) && (
               <div style={{ marginTop: 8 }}>

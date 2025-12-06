@@ -14,34 +14,51 @@ body {
   background: var(--bg);
   color: var(--text);
   -webkit-font-smoothing:antialiased;
+  overflow: hidden; /* prevent body scroll so scrollbar appears on .app-main */
 }
 
-/* Prevent accidental horizontal overflow that creates empty space on desktop */
-html, body { overflow-x: hidden; }
+
+html, body, #root { overflow-x: hidden; }
 
 .app-root { width:100%; }
 
-/* Make direct children inside .app-main stretch to available width and avoid internal overflow */
 .app-main > * { width:100%; box-sizing:border-box; }
 
 .app-header{
   background: linear-gradient(90deg,var(--accent),#0a6bb0);
   color: white;
-  padding: 16px; /* keep compact on small screens */
+  padding: 28px 0; /* increased vertical space for a larger banner */
   text-align: center;
-  box-shadow: 0 2px 8px rgba(11,116,197,0.12);
+  box-shadow: 0 4px 18px rgba(11,116,197,0.16);
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  width: 100vw;
+  box-sizing: border-box;
+  z-index: 1;
 }
-.app-title{ font-weight:700; font-size:18px; }
-.app-sub{ font-size:12px; opacity:0.95; }
+.app-header-inner{
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 0 16px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.app-title{ font-weight:700; font-size:24px; }
+.app-sub{ font-size:15px; opacity:0.95; }
 
 .app-main{ padding:14px; max-width:720px; margin:0 auto; }
 .app-footer{ text-align:center; font-size:12px; color:var(--muted); padding:8px 0 40px; }
 
-/* Ensure root fills viewport so footer/pager alignment works */
-.app-root { min-height: 100vh; display:flex; flex-direction:column; }
-.app-main { flex:1 1 auto; display:flex; flex-direction:column; }
 
-/* Ensure list fills available vertical space so pager stays at bottom */
+.app-root { min-height: 100vh; display:flex; flex-direction:column; }
+.app-main { flex:1 1 auto; display:flex; flex-direction:column; overflow: auto; -webkit-overflow-scrolling: touch; }
+
+
 .list { display:flex; flex-direction:column; min-height: 100%; }
 .cards { flex:1 1 auto; overflow:auto; padding-right:4px; }
 .pager { margin-top:auto; }
@@ -72,48 +89,57 @@ html, body { overflow-x: hidden; }
   .cards{ grid-template-columns:repeat(2,1fr); }
 }
 
-/* Desktop layout improvements: keep mobile rules unchanged and only adjust at larger widths */
+
 @media (min-width:800px) {
-  /* allow wider content area on desktop */
+
   .app-main{ max-width:1100px; padding:28px; }
 
-  /* give header a horizontal padding but keep content centered via .app-main */
-  .app-header{ padding:20px 40px; text-align:center; }
-  .app-title{ font-size:20px; }
+ 
+  .app-header{
+    padding:40px 0; /* larger vertical header on wide screens */
+    text-align:center;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    width: 100vw;
+  }
+  .app-title{ font-size:28px; }
+  .app-sub{ font-size:16px; }
 
-  /* make search controls constrained and aligned */
+ 
   .search{ gap:12px; margin-bottom:16px; max-width:760px; margin-left:auto; margin-right:auto; }
   .search input{ padding:12px 14px; border-radius:10px; }
   .search button{ padding:12px 16px; border-radius:10px; }
 
-  /* increase grid columns and spacing on wide screens */
+  
   .cards{ grid-template-columns:repeat(3,1fr); gap:18px; }
   .card{ padding:16px; border-radius:14px; }
 
-  /* keep audio element from stretching beyond card nicely */
+
   .card-audio{ width:100%; max-width:100%; }
 
-  /* pager and controls sizing */
+ 
   .pager{ gap:14px; }
   .pager button{ padding:10px 14px; min-width:48px; font-size:15px; }
 
-  /* subtle container centering for footer */
+ 
   .app-footer{ max-width:980px; margin-left:auto; margin-right:auto; }
 
-  /* center the whole app and constrain maximum canvas to avoid large empty gutters */
+  
   .app-root { max-width:1200px; margin-left:auto; margin-right:auto; }
 
-  /* Make the page feel like a normal website on desktop */
+ 
   body {
     display: block !important;
     place-items: initial !important;
     min-height: auto !important;
     background: var(--bg) !important;
-    padding: 20px 0 60px 0;
+    padding: 0 0 60px 0; /* remove top padding so header sits at top */
   }
 
-  /* Stronger overrides for RecordingsList root (handles inline styles)
-     Target the div with inline style attribute to ensure specificity */
+  
   .app-main > div[style] {
     min-height: auto !important;
     background: transparent !important;
@@ -121,20 +147,16 @@ html, body { overflow-x: hidden; }
     margin: 0 !important;
   }
 
-  /* For normal page container inside .app-main, prefer a centered card
-     but do not enforce full viewport height */
+  
   .app-main > div > div,
   .app-main > div > section {
     max-width: 980px;
     margin: 18px auto;
   }
 
-  /* RecordingsList (desktop): make the list area look like a page card
-     - center the inner container, limit width, remove full-viewport behaviour
-     - normalize back button, search form and list item spacing */
+  
   .app-main > div {
-    /* This rule applies when components render a single inner container
-       Keep it card-like but ensure it's not full-height */
+  
     background: #fff;
     padding: 18px;
     margin: 18px auto;
@@ -145,7 +167,7 @@ html, body { overflow-x: hidden; }
     min-height: auto !important;
   }
 
-  /* Back button alignment */
+  
   .app-main button[aria-label="Volver al inicio"] {
     padding: 8px 12px;
     border-radius: 8px;
@@ -159,7 +181,7 @@ html, body { overflow-x: hidden; }
     box-shadow: 0 6px 18px rgba(11,116,197,0.12);
   }
 
-  /* Search form: constrain width and align search controls neatly */
+ 
   .app-main form {
     display: flex;
     gap: 12px;
@@ -183,7 +205,7 @@ html, body { overflow-x: hidden; }
     min-width: 110px;
   }
 
-  /* Results list: card-like rows with good spacing */
+  
   .app-main ul { list-style: none; padding-left: 0; margin: 0; }
   .app-main ul li {
     margin: 0 0 16px 0;
@@ -198,10 +220,10 @@ html, body { overflow-x: hidden; }
     align-items: center;
   }
 
-  /* Make audio control constrained and consistent */
+
   .app-main audio { max-width: 480px; width: 100%; }
 
-  /* small helper: ensure links & small text don't overflow */
+
   .app-main a { word-break: break-word; }
   .app-main small { color: var(--muted); }
 }

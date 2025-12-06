@@ -9,8 +9,10 @@ export default function App() {
   return (
     <div className="app-root">
       <header className="app-header">
-        <div className="app-title">AppBird</div>
-        <div className="app-sub">Grabaciones de aves · Guatemala</div>
+        <div className="app-header-inner">
+          <div className="app-title">AppBird</div>
+          <div className="app-sub">Grabaciones de aves · Guatemala</div>
+        </div>
       </header>
 
       <main className="app-main">
