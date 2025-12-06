@@ -176,7 +176,7 @@ export default function RecordingsList({ onBack }) {
                   Tu navegador no soporta audio.
                 </audio>
                 <div style={{ marginTop: 6 }}>
-                  <a href={r.file || r.url} target="_blank" rel="noreferrer">Abrir en nueva pestaña</a>
+                  <a href={r.file || r.url} target="_blank" rel="noreferrer">Descargar</a>
                 </div>
               </div>
             )}
